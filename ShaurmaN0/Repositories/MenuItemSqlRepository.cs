@@ -12,8 +12,4 @@ namespace ShaurmaN0.Repositories;
             var connection = new SqlConnection(connectionString);
             return await connection.QueryAsync<MenuItem>("select * from MenuItem");
         }
-         public async Task<IEnumerable<MenuItem>> GetMenuItemByIdAsync(int id) {
-            var connection = new SqlConnection(connectionString);
-            return await connection.QueryAsync<MenuItem>("select * from MenuItem where Id = @id", new { id = id });
-        }
     }
