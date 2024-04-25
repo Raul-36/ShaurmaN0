@@ -6,7 +6,7 @@ namespace ShaurmaN0.Repositories;
 
     public class MenuItemSqlRepository
     {
-        private const string connectionString = "Server=localhost;Database=ShaurmaN0;";
+        private const string connectionString = "Server=localhost;Database=ShaurmaN0;Integrated Security=SSPI;";
 
         public async Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync() {
             var connection = new SqlConnection(connectionString);
