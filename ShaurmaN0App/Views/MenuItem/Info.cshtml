@@ -1,0 +1,14 @@
+@model MenuItem
+
+@{
+    ViewData["Title"] = "Info";
+}
+
+<div>
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">@base.Model.Name?</h5>
+    <p class="card-text"> Price: <input type="text" value="@base.Model.Price?()" readonly></p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
