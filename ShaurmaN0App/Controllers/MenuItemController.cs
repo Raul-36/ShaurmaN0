@@ -4,7 +4,7 @@ using ShaurmaN0App.Models;
 namespace ShaurmaN0App.Controllers;
 
 
-[Route("[controller]/[action]")]
+[Route("/[controller]/[action]")]
 class MenuItemController : Controller
 {
         [ActionName("Info")]
@@ -12,5 +12,9 @@ class MenuItemController : Controller
         var MenuItemJson = await System.IO.File.ReadAllTextAsync("./Assets/MenuItem.json");
         var MenuItem = JsonSerializer.Deserialize<MenuItem>(MenuItemJson);
         return base.View(model: MenuItem);
+        }
+        public  IActionResult Index()
+        {
+                return View();
         }
 }
