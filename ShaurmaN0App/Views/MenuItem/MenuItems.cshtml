@@ -1,0 +1,16 @@
+@model IEnumerable<MenuItem>
+
+@{
+    ViewData["Title"] = "MenuItems";
+}
+
+<div>
+  @foreach(var MenuItem in base.Model){
+        <div class="card" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">@MenuItem.Name</h5>
+        <p class="card-text"> Price: <input type="text" value= "@MenuItem.Price" readonly></p>
+        </div>
+        </div>
+    }
+</div>

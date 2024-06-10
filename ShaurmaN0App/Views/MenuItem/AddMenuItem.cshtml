@@ -1,0 +1,14 @@
+@model MenuItem
+@{
+    ViewData["Title"] = "AddMenuItem";
+}
+<form asp-controller="MenuItem" asp-action="AddMenuItemApi" method="post">
+    <label asp-for="@Model.Name">Name: </label>
+    <input asp-for="@Model.Name" type="text">
+    <br>
+    <label asp-for="@Model.Price">Price: </label>
+    <input asp-for="@Model.Price" type="text">
+    <br>
+
+    <button type="submit">Add Menu item</button>
+</form>
