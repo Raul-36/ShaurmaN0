@@ -1,0 +1,30 @@
+@model MenusCategory
+@{
+    ViewData["Title"] = "EditCategory";
+}
+<form id="editForm">
+    <label asp-for="@Model.Name">Name: </label>
+    <input asp-for="@Model.Name" type="text">
+    <br>
+    <button type="submit">Edit</button>
+</form>
+<script>
+    document.getElementById('editForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const data = {
+            Id: "@Model.Id",
+            Name: form.Name.value
+        };
+
+        const response = fetch('/MenusCategory/EditCategoryApi', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        window.location.href = "/MenusCategory/GetAll";
+    });
+</script>

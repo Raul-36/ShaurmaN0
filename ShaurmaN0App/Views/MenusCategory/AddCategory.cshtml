@@ -1,0 +1,10 @@
+@model MenusCategory
+@{
+    ViewData["Title"] = "AddCategory";
+}
+<form asp-controller="MenusCategory" asp-action="AddCategoryApi" method="post">
+    <label asp-for="@Model.Name">Name: </label>
+    <input asp-for="@Model.Name" type="text">
+    <br>
+    <button type="submit">Add</button>
+</form>
