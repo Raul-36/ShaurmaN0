@@ -6,35 +6,35 @@ namespace ShaurmaN0App.Controllers;
 
 
 [Route("/[controller]/[action]")]
-public class MenuItemController : Controller
+public class MenusController : Controller
 {
-        [ActionName("MenuItems")]
-        public async Task<IActionResult> GetMenuItemsAsync() {
-        var menuItemsJson = await System.IO.File.ReadAllTextAsync("./Assets/MenuItem.json");
-        var menuItems = JsonSerializer.Deserialize<IEnumerable<MenuItem>>(menuItemsJson, new JsonSerializerOptions
+        [ActionName("Menus")]
+        public async Task<IActionResult> GetMenusAsync() {
+        var menusJson = await System.IO.File.ReadAllTextAsync("./Assets/Menus.json");
+        var menus = JsonSerializer.Deserialize<IEnumerable<Menus>>(menusJson, new JsonSerializerOptions
         {
                 PropertyNameCaseInsensitive = true
         });
-        return base.View(model: menuItems);
+        return base.View(model: menus);
         }
 
-        [ActionName("AddMenuItemApi")]
+        [ActionName("AddMenusApi")]
         [HttpPost]
-        public async Task<IActionResult> AddMenuItemApi([FromForm] MenuItem menuItem) { 
-                var menuItemsJson = await System.IO.File.ReadAllTextAsync("./Assets/MenuItem.json");
-                var menuItems = JsonSerializer.Deserialize<IEnumerable<MenuItem>>(menuItemsJson, new JsonSerializerOptions
+        public async Task<IActionResult> AddMenusApi([FromForm] Menus menus) { 
+                var menusJson = await System.IO.File.ReadAllTextAsync("./Assets/Menus.json");
+                var menus = JsonSerializer.Deserialize<IEnumerable<Menus>>(menusJson, new JsonSerializerOptions
                 {
                         PropertyNameCaseInsensitive = true
                 });
 
-                var newMenuItems = menuItems.Append(menuItem);
-                System.IO.File.WriteAllText("./Assets/MenuItem.json", JsonSerializer.Serialize(newMenuItems));
-                return base.Redirect("MenuItems");
+                var newMenus = menus.Append(menus);
+                System.IO.File.WriteAllText("./Assets/Menus.json", JsonSerializer.Serialize(newMenus));
+                return base.Redirect("Menus");
         }
-        [ActionName("AddMenuItem")]
+        [ActionName("AddMenus")]
         [HttpGet]
-        public async Task<IActionResult> AddMenuItem() {
-                return base.View(model: new MenuItem {});
+        public async Task<IActionResult> AddMenus() {
+                return base.View(model: new Menus {});
         }
 
 }

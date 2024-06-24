@@ -1,15 +1,15 @@
-@model IEnumerable<MenuItem>
+@model IEnumerable<Menus>
 
 @{
-    ViewData["Title"] = "MenuItems";
+    ViewData["Title"] = "Menus";
 }
 
 <div>
-  @foreach(var MenuItem in base.Model){
+  @foreach(var Menus in base.Model){
         <div class="card" style="width: 18rem;">
         <div class="card-body">
-        <h5 class="card-title">@MenuItem.Name</h5>
-        <p class="card-text"> Price: <input type="text" value= "@MenuItem.Price" readonly></p>
+        <h5 class="card-title">@Menus.Name</h5>
+        <p class="card-text"> Price: <input type="text" value= "@Menus.Price" readonly></p>
         </div>
         </div>
     }

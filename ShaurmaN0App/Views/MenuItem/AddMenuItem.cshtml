@@ -1,8 +1,8 @@
-@model MenuItem
+@model Menus
 @{
-    ViewData["Title"] = "AddMenuItem";
+    ViewData["Title"] = "AddMenus";
 }
-<form asp-controller="MenuItem" asp-action="AddMenuItemApi" method="post">
+<form asp-controller="Menus" asp-action="AddMenusApi" method="post">
     <label asp-for="@Model.Name">Name: </label>
     <input asp-for="@Model.Name" type="text">
     <br>

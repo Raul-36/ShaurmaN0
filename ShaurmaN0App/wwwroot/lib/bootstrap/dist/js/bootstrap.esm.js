@@ -2227,7 +2227,7 @@ class Dropdown extends BaseComponent {
     };
   }
 
-  _selectMenuItem({
+  _selectMenus({
     key,
     target
   }) {
@@ -2345,7 +2345,7 @@ class Dropdown extends BaseComponent {
         instance.show();
       }
 
-      instance._selectMenuItem(event);
+      instance._selectMenus(event);
 
       return;
     }
