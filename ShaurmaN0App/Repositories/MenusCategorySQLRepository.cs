@@ -40,6 +40,13 @@ namespace ShaurmaN0App.Repositories
             return await connection.QueryAsync<MenusCategory>(sql);
         }
 
+        public async Task<MenusCategory> GetByIdAsync(Guid id)
+        {
+            var connection = new SqlConnection(this.configuration.GetConnectionString("SqlDb"));
+            string sql = "SELECT * FROM MenusCategory WHERE Id = @Id";
+           return await connection.QuerySingleAsync <MenusCategory>(sql, new { Id = id });
+        }
+
         public async Task UpdateAsync(MenusCategory menusCategory)
         {
             var connection = new SqlConnection(this.configuration.GetConnectionString("SqlDb"));

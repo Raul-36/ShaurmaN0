@@ -1,13 +1,15 @@
 create database ShaurmaN0;
 
 use ShaurmaN0;
-create table MenusCategory(
-	Id guid primary key identity,
+create table MenusCategory
+(
+	Id  UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID() primary key,
 	Name nvarchar(15) not null
 )
-create table Menus(
-	Id guid primary key identity,
+create table Menus
+(
+	Id  UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID() primary key,
 	Name nvarchar(15) not null,
-	MenusCategoryId guid FOREIGN KEY REFERENCES MenusCategory(Id),
+	MenusCategoryId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES MenusCategory(Id),
 	Price float not null
 )

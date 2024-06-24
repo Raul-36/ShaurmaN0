@@ -46,5 +46,4 @@ namespace ShaurmaN0App.Repositories
             await connection.ExecuteAsync(sql, Menus);
         }
     }
-    }
 }
