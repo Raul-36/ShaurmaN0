@@ -1,49 +1,49 @@
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using Dapper;
+using ShaurmaN0App.Data;
+using ShaurmaN0App.Models;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using Microsoft.EntityFrameworkCore;
+using ShaurmaN0App.Data;
 using ShaurmaN0App.Models;
 using ShaurmaN0App.Repositories.Base;
-
 namespace ShaurmaN0App.Repositories
 {
     public class MenusSQLRepository : IMenusRepository
     {
-        private readonly IConfiguration configuration;
+        private readonly ShaurmaDbContext context;
 
-        public MenusSQLRepository(IConfiguration configuration)
+        public MenusSQLRepository(ShaurmaDbContext context)
         {
-            this.configuration = configuration;
+            this.context = context;
         }
 
-        public async Task CreateAsync(Menus Menus)
+        public async Task CreateAsync(Menus menus)
         {
-            var connection = new SqlConnection(this.configuration.GetConnectionString("SqlDb"));
-            string sql = "INSERT INTO Menus (Name, MenusCategoryId, Price) VALUES (@Name, @MenusCategoryId, @Price)";
-            await connection.ExecuteAsync(sql, Menus);
+            context.Menus.Add(menus);
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var connection = new SqlConnection(this.configuration.GetConnectionString("SqlDb"));
-            string sql = "DELETE FROM Menus WHERE Id = @Id";
-            await connection.ExecuteAsync(sql, new { Id = id });
+            var mC = context.Menus.FirstOrDefault(m => m.Id == id, null);
+            if (mC != null)
+            {
+                context.Menus.Remove(mC);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<Menus>> GetAllAsync()
         {
-            var connection = new SqlConnection(this.configuration.GetConnectionString("SqlDb"));
-            string sql = "SELECT * FROM Menus";
-            return await connection.QueryAsync<Menus>(sql);
+
+            return await context.Menus.ToArrayAsync();
         }
 
-        public async Task UpdateAsync(Menus Menus)
+
+        public async Task UpdateAsync(Menus menus)
         {
-            var connection = new SqlConnection(this.configuration.GetConnectionString("SqlDb"));
-            string sql = "UPDATE Menus SET Name = @Name Price = @Price, MenusCategoryId = @MenusCategoryId WHERE Id = @Id";
-            await connection.ExecuteAsync(sql, Menus);
+            context.Menus.AddOrUpdate(menus, menus);
+            await context.SaveChangesAsync();
         }
     }
 }
