@@ -1,4 +1,3 @@
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Models;
 
@@ -10,14 +9,14 @@ namespace ShaurmaN0App.Data
         {
         }
 
-        public System.Data.Entity.DbSet<Log> Logs { get; set; }
-        public System.Data.Entity.DbSet<MenusCategory> MenusCategories { get; set; }
-        public System.Data.Entity.DbSet<Menus> Menus { get; set; }
+        public DbSet<Log> Logs { get; set; }
+        public DbSet<MenusCategory> MenusCategories { get; set; }
+        public DbSet<Menus> Menus { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Menus>()
             .HasOne(m => m.MenusCategory)    
-            .WithMany() 
+            .WithMany(mc => mc.Menus) 
             .HasForeignKey(m => m.MenusCategoryId); 
 
             modelBuilder.Entity<MenusCategory>().Property(mC => mC.Id).HasDefaultValue(Guid.NewGuid());

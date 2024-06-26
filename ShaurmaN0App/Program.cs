@@ -7,12 +7,12 @@ using ShaurmaN0App.Repositories.Base;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IMenusRepository, MenusSQLRepository>();
-builder.Services.AddTransient<IMenusCategoryRepository, MenusCategorySQLRepository>();
 builder.Services.AddDbContext<ShaurmaDbContext>(dbContextOptionsBuilder => {
     var connectionString = builder.Configuration.GetConnectionString("SqlDb");
     dbContextOptionsBuilder.UseSqlServer(connectionString);
 });
+builder.Services.AddTransient<IMenusRepository, MenusSQLRepository>();
+builder.Services.AddTransient<IMenusCategoryRepository, MenusCategorySQLRepository>();
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {

@@ -1,4 +1,3 @@
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Data;
@@ -45,7 +44,7 @@ namespace ShaurmaN0App.Repositories
 
         public async Task UpdateAsync(MenusCategory menusCategory)
         {
-           context.MenusCategories.AddOrUpdate(menusCategory, menusCategory);
+           context.MenusCategories.Update(menusCategory);
            await context.SaveChangesAsync();
         }
     }
