@@ -14,7 +14,7 @@ namespace ShaurmaN0App.Repositories
 
         public MenusSQLRepository(ShaurmaDbContext context)
         {
-            this.context = context;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task CreateAsync(Menus menus)
@@ -35,14 +35,17 @@ namespace ShaurmaN0App.Repositories
 
         public async Task<IEnumerable<Menus>> GetAllAsync()
         {
-
+            if (context.Menus == null)
+            {
+                throw new InvalidOperationException("Menus DbSet is not initialized.");
+            }
             return await context.Menus.ToArrayAsync();
         }
 
 
         public async Task UpdateAsync(Menus menus)
         {
-            context.Menus.AddOrUpdate(menus, menus);
+            context.Menus.Update(menus);
             await context.SaveChangesAsync();
         }
     }

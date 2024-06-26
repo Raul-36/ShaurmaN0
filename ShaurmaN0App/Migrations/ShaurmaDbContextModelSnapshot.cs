@@ -42,7 +42,7 @@ namespace ShaurmaN0App.Migrations
 
                     b.HasIndex("MenusCategoryId");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Menus", (string)null);
 
                     b.HasData(
                         new
@@ -72,7 +72,7 @@ namespace ShaurmaN0App.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MenusCategory");
+                    b.ToTable("MenusCategory", (string)null);
 
                     b.HasData(
                         new
