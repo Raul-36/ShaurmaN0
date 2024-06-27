@@ -55,6 +55,7 @@ namespace ShaurmaN0App.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteApiAsync(Guid id)
         {
+            Console.WriteLine(id);
             await this.menusCategoryRepository.DeleteAsync(id);
             return base.Redirect("GetAll");
         }

@@ -1,6 +1,5 @@
 using ShaurmaN0App.Data;
 using ShaurmaN0App.Models;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Data;
