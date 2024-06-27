@@ -10,7 +10,7 @@ namespace ShaurmaN0App.Data
         }
 
         public DbSet<Log> Logs { get; set; }
-        public DbSet<MenusCategory> MenusCategories { get; set; }
+        public DbSet<MenusCategory> MenusCategory { get; set; }
         public DbSet<Menus> Menus { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
