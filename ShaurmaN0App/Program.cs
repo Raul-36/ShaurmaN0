@@ -1,4 +1,3 @@
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Data;
 using ShaurmaN0App.Repositories;
@@ -22,9 +21,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-//app.UseMiddleware<LoggingMiddleware>();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

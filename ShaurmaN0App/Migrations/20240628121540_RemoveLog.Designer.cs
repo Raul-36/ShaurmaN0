@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShaurmaN0App.Data;
 
@@ -11,9 +12,11 @@ using ShaurmaN0App.Data;
 namespace ShaurmaN0App.Migrations
 {
     [DbContext(typeof(ShaurmaDbContext))]
-    partial class ShaurmaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240628121540_RemoveLog")]
+    partial class RemoveLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +30,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("f46b24a3-0473-4247-a0a4-402246ae32bf"));
+                        .HasDefaultValue(new Guid("be4155fc-306d-44ae-8c3a-1cfb9ba9ca38"));
 
                     b.Property<Guid?>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -47,15 +50,15 @@ namespace ShaurmaN0App.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ec1abfe7-9344-4b03-8315-2800ce03d2d4"),
-                            MenusCategoryId = new Guid("095b8f94-afe1-428b-9852-6596de3b8d5a"),
+                            Id = new Guid("ae14d479-5ce8-4ec1-ae4c-d233dacab0c4"),
+                            MenusCategoryId = new Guid("d9f1bf75-5296-4a41-8357-d1121136a3f5"),
                             Name = "Shaurma",
                             Price = 5.0
                         },
                         new
                         {
-                            Id = new Guid("480758ac-fcc4-4f29-9f7b-ec53e20778af"),
-                            MenusCategoryId = new Guid("a1073a67-956a-423e-8fd5-4afb6c5c9795"),
+                            Id = new Guid("2f643f32-2aa7-47e6-ac1e-ea97ab2f03c8"),
+                            MenusCategoryId = new Guid("03601bd2-66af-4290-9506-efee2374bba1"),
                             Name = "Cola",
                             Price = 1.5
                         });
@@ -66,7 +69,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("ad23a096-fa50-4160-b4fb-834433293008"));
+                        .HasDefaultValue(new Guid("43c639e4-4163-4503-b806-a719b386f8ad"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -79,12 +82,12 @@ namespace ShaurmaN0App.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("095b8f94-afe1-428b-9852-6596de3b8d5a"),
+                            Id = new Guid("d9f1bf75-5296-4a41-8357-d1121136a3f5"),
                             Name = "food"
                         },
                         new
                         {
-                            Id = new Guid("a1073a67-956a-423e-8fd5-4afb6c5c9795"),
+                            Id = new Guid("03601bd2-66af-4290-9506-efee2374bba1"),
                             Name = "drinkables"
                         });
                 });
@@ -93,8 +96,7 @@ namespace ShaurmaN0App.Migrations
                 {
                     b.HasOne("ShaurmaN0App.Models.MenusCategory", "MenusCategory")
                         .WithMany("Menus")
-                        .HasForeignKey("MenusCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MenusCategoryId");
 
                     b.Navigation("MenusCategory");
                 });

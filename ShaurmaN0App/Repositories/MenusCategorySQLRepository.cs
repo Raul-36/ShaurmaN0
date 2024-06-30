@@ -1,8 +1,6 @@
 using ShaurmaN0App.Data;
 using ShaurmaN0App.Models;
 using Microsoft.EntityFrameworkCore;
-using ShaurmaN0App.Data;
-using ShaurmaN0App.Models;
 using ShaurmaN0App.Repositories.Base;
 namespace ShaurmaN0App.Repositories
 {
