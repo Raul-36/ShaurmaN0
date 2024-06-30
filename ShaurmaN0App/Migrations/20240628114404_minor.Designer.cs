@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShaurmaN0App.Data;
 
@@ -11,9 +12,11 @@ using ShaurmaN0App.Data;
 namespace ShaurmaN0App.Migrations
 {
     [DbContext(typeof(ShaurmaDbContext))]
-    partial class ShaurmaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240628114404_minor")]
+    partial class minor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,12 +25,50 @@ namespace ShaurmaN0App.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ShaurmaN0App.Models.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("HttpMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponseBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Log");
+                });
+
             modelBuilder.Entity("ShaurmaN0App.Models.Menus", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("f46b24a3-0473-4247-a0a4-402246ae32bf"));
+                        .HasDefaultValue(new Guid("51c9814f-e5ec-4985-8a90-88dc37af5423"));
 
                     b.Property<Guid?>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -47,15 +88,15 @@ namespace ShaurmaN0App.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ec1abfe7-9344-4b03-8315-2800ce03d2d4"),
-                            MenusCategoryId = new Guid("095b8f94-afe1-428b-9852-6596de3b8d5a"),
+                            Id = new Guid("03e7b790-2ae3-414c-aea6-643e9793a71a"),
+                            MenusCategoryId = new Guid("e1ab5cd2-dbd3-44d3-a2e4-e9fe1df81554"),
                             Name = "Shaurma",
                             Price = 5.0
                         },
                         new
                         {
-                            Id = new Guid("480758ac-fcc4-4f29-9f7b-ec53e20778af"),
-                            MenusCategoryId = new Guid("a1073a67-956a-423e-8fd5-4afb6c5c9795"),
+                            Id = new Guid("a8a4edbd-81aa-4cfe-9a41-d2a703c5e62c"),
+                            MenusCategoryId = new Guid("e590882f-369a-45f9-958f-091a091dca95"),
                             Name = "Cola",
                             Price = 1.5
                         });
@@ -66,7 +107,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("ad23a096-fa50-4160-b4fb-834433293008"));
+                        .HasDefaultValue(new Guid("2cdc1889-d6a2-4dc8-8173-0f0c4100871a"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -79,12 +120,12 @@ namespace ShaurmaN0App.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("095b8f94-afe1-428b-9852-6596de3b8d5a"),
+                            Id = new Guid("e1ab5cd2-dbd3-44d3-a2e4-e9fe1df81554"),
                             Name = "food"
                         },
                         new
                         {
-                            Id = new Guid("a1073a67-956a-423e-8fd5-4afb6c5c9795"),
+                            Id = new Guid("e590882f-369a-45f9-958f-091a091dca95"),
                             Name = "drinkables"
                         });
                 });
@@ -93,8 +134,7 @@ namespace ShaurmaN0App.Migrations
                 {
                     b.HasOne("ShaurmaN0App.Models.MenusCategory", "MenusCategory")
                         .WithMany("Menus")
-                        .HasForeignKey("MenusCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MenusCategoryId");
 
                     b.Navigation("MenusCategory");
                 });
