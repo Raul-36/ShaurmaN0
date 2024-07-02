@@ -1,0 +1,14 @@
+[
+    {
+        "Id":"2F18E7E0-5AEC-4910-9FA6-7B385E4E2C79",
+        "Name": "Cola",
+        "MenusCategoryId": "1C2EDB52-859B-43DC-8195-1078A72FA35F",
+        "Price":1.5
+    },
+    {
+       "Id":"146851D6-3158-4BE1-AC7D-DA077F8703CC",
+        "Name": "Shaurma",
+        "MenusCategoryId": "BA8560AE-88CB-4F03-B7DF-A5574CCDBE56",
+        "Price":5
+    }
+]

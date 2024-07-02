@@ -14,10 +14,10 @@ namespace ShaurmaN0App.Dtos
 
         [Required(ErrorMessage = "Price is required")]
         [Range(1, 1_000_000)]
-        public double? Price { get; set; }
+        public double Price { get; set; }
 
         [Required(ErrorMessage = "Category is required")]
-        public Guid? SelectedCategoryId { get; set; }
+        public Guid SelectedCategoryId { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }  = new List<SelectListItem>();
     }

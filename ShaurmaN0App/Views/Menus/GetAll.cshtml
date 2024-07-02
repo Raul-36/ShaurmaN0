@@ -8,7 +8,11 @@
 <div class="d-flex flex-wrap" style="max-width: 1400px;">
     @foreach (var Menus in base.Model)
     {
+
+        var filePath = "/"+Menus.Id+".jpg";
+
         <div class="card mb-4 mr-4" style="width: 18rem;">
+            <img src="@filePath" class="card-img-top" alt="@Menus.Id">
             <div class="card-body">
                 <h5 class="card-title">@Menus.Name</h5>
                 <p class="card-text">Price: <input type="text" value="@Menus.Price" readonly></p>
