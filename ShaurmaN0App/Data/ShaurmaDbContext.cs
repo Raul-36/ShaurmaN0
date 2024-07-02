@@ -12,6 +12,14 @@ namespace ShaurmaN0App.Data
         public DbSet<Menus> Menus { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Menus>(m =>
+            {
+                m.HasIndex(m=>m.Name).IsUnique();
+            });
+            modelBuilder.Entity<MenusCategory>(mC =>
+            {
+                mC.HasIndex(mC=>mC.Name).IsUnique();
+            });
             modelBuilder.Entity<Menus>()
             .HasOne(m => m.MenusCategory)
             .WithMany(mc => mc.Menus)

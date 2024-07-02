@@ -9,6 +9,7 @@ namespace ShaurmaN0App.Repositories.Base
     public interface IMenusRepository
     {
         Task<IEnumerable<Menus>> GetAllAsync();
+        Task<Menus> GetByIdAsync(Guid id);
         Task CreateAsync(Menus menus);
         Task UpdateAsync(Menus menus);
         Task DeleteAsync(Guid id);

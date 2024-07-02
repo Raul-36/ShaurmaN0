@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShaurmaN0App.Models;
 using ShaurmaN0App.Repositories.Base;
+using ShaurmaN0App.Services.Base;
 
 namespace ShaurmaN0App.Controllers
 {
     [Route("/[controller]/[action]")]
     public class MenusCategoryController : Controller
     {
-        private readonly IMenusCategoryRepository menusCategoryRepository;
-        public MenusCategoryController(IMenusCategoryRepository menusCategoryRepository)
+        private readonly IMenusCategoryService menusCategoryService;
+        private readonly IValidator<MenusCategory> menusCategoryValidator;
+        public MenusCategoryController(IMenusCategoryService menusCategoryService, IValidator<MenusCategory> menusCategoryValidator)
         {
-            this.menusCategoryRepository = menusCategoryRepository;
+            this.menusCategoryService = menusCategoryService;
+            this.menusCategoryValidator = menusCategoryValidator;
         }
         [ActionName("GetAll")]
         public async Task<IActionResult> GetCategorysAsync()
         {
-            var menus = await menusCategoryRepository.GetAllAsync();
+            var menus = await menusCategoryService.GetAllAsync();
             return base.View(model: menus);
         }
 
@@ -29,7 +33,18 @@ namespace ShaurmaN0App.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategoryApi([FromForm] MenusCategory menusCategory)
         {
-            await this.menusCategoryRepository.CreateAsync(menusCategory);
+            var validationResult = await menusCategoryValidator.ValidateAsync(menusCategory);
+
+            if (validationResult.IsValid == false)
+            {
+
+                foreach (var error in validationResult.Errors)
+                {
+                    base.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return base.View("AddCategory");
+            }
+            await this.menusCategoryService.CreateAsync(menusCategory);
             return base.Redirect("GetAll");
         }
         [ActionName("AddCategory")]
@@ -42,21 +57,32 @@ namespace ShaurmaN0App.Controllers
         [HttpPut]
         public async Task<IActionResult> EditCategoryApi([FromBody] MenusCategory menusCategory)
         {
-            await this.menusCategoryRepository.UpdateAsync(menusCategory);
+            var validationResult = await menusCategoryValidator.ValidateAsync(menusCategory);
+
+            if (validationResult.IsValid == false)
+            {
+
+                foreach (var error in validationResult.Errors)
+                {
+                    base.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return base.View($"EditCategory",menusCategory);
+            }
+            await this.menusCategoryService.UpdateAsync(menusCategory);
             return base.Redirect("GetAll");
         }
         [Route("/[controller]/Edit/{id}")]
         [HttpGet]
         public async Task<IActionResult> EditCategoryAsync(Guid id)
         {
-            return base.View(model:  await menusCategoryRepository.GetByIdAsync(id));
+            return base.View(model: await menusCategoryService.GetByIdAsync(id));
         }
         [Route("/[controller]/DeleteApi/{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteApiAsync(Guid id)
         {
             Console.WriteLine(id);
-            await this.menusCategoryRepository.DeleteAsync(id);
+            await this.menusCategoryService.DeleteAsync(id);
             return base.Redirect("GetAll");
         }
 
