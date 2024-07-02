@@ -1,13 +1,30 @@
-@model Menus
+@model ShaurmaN0App.Dtos.MenusCreateDto
 @{
     ViewData["Title"] = "AddMenus";
 }
-<form asp-controller="Menus" asp-action="AddMenusApi" method="post">
-    <label asp-for="@Model.Name">Name: </label>
-    <input asp-for="@Model.Name" type="text">
-    <br>
-    <label asp-for="@Model.Price">Price: </label>
-    <input asp-for="@Model.Price" type="text">
-    <br>
-    <button type="submit">Add</button>
-</form>
+<div class="mx-auto" style="width: 300px;">
+    <form asp-controller="Menus" asp-action="AddMenusApi" method="post">
+        <div class="mb-3">
+            <label asp-for="@Model.Name">Name: </label>
+            <br>
+            <input asp-for="@Model.Name" type="text">
+            <span class="d-block text-danger" asp-validation-for="@Model.Name"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="@Model.Price">Price: </label>
+            <br>
+            <input asp-for="@Model.Price" type="text">
+            <span class="d-block text-danger" asp-validation-for="@Model.Price"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="@Model.SelectedCategoryId">Category</label>
+            <select asp-for="@Model.SelectedCategoryId" class="form-control" asp-items="@Model.Categories"></select>
+            <span asp-validation-for="@Model.SelectedCategoryId" class="text-danger"></span>
+        </div>
+        <button type="submit">Add</button>
+    </form>
+</div>
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -3,37 +3,33 @@
 @{
     ViewData["Title"] = "AllMenusCategory";
 }
-
-<div>
-    <a class="btn btn-primary"href="/MenusCategory/AddCategory" role="button">Add</a>
-  @foreach(var category in base.Model){
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-        <h5 class="card-title">@category.Name</h5>
-        <a href="/MenusCategory/Edit/@category.Id" class="btn btn-secondary" role="button">Edit</a>
-        <button id="@category.Id" type="button" class="btn btn-danger delete-btn">Delete</button>
-        </div>
+<a class="btn btn-primary" href="/MenusCategory/AddCategory" role="button">Add</a>
+<div class="d-flex flex-wrap" style="max-width: 1400px;">
+    @foreach (var category in base.Model)
+    {
+        <div class="card mb-4 mr-4" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@category.Name</h5>
+                <a href="/MenusCategory/Edit/@category.Id" class="btn btn-secondary" role="button">Edit</a>
+                <button id="@category.Id" type="button" class="btn btn-danger delete-btn">Delete</button>
+            </div>
         </div>
     }
 </div>
 <script>
     const btns = document.getElementsByClassName('delete-btn');
     for (let i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('click', async function(event) {
-        event.preventDefault();
-        
-        const id = event.target.id;
+        btns[i].addEventListener('click', async function (event) {
+            event.preventDefault();
 
-    
+            const id = event.target.id;
+
+
             const response = await fetch('/MenusCategory/DeleteApi/' + id, {
                 method: 'DELETE'
             });
+            location.reload();
 
-            if (response.ok) {
-                window.location.href = "/MenusCategory/GetAll";
-            } else {
-                console.error('Failed to delete:', response.status, response.statusText);
-            }
-    });
-}
+        });
+    }
 </script>

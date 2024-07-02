@@ -46,6 +46,11 @@ namespace ShaurmaN0App.Repositories
 
         public async Task UpdateAsync(MenusCategory menusCategory)
         {
+            var existingEntity = await context.MenusCategory.FindAsync(menusCategory.Id);
+            if (existingEntity != null)
+            {
+                context.Entry(existingEntity).State = EntityState.Detached;
+            }
             context.MenusCategory.Update(menusCategory);
             await context.SaveChangesAsync();
         }

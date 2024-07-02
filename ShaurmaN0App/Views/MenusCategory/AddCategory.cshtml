@@ -2,9 +2,18 @@
 @{
     ViewData["Title"] = "AddCategory";
 }
-<form asp-controller="MenusCategory" asp-action="AddCategoryApi" method="post">
-    <label asp-for="@Model.Name">Name: </label>
-    <input asp-for="@Model.Name" type="text">
-    <br>
-    <button type="submit">Add</button>
-</form>
+<div class="mx-auto" style="width: 300px;">
+    <form asp-controller="MenusCategory" asp-action="AddCategoryApi" method="post">
+        <div>
+            <label asp-for="@Model.Name">Name: </label>
+            <br>
+            <input asp-for="@Model.Name" type="text">
+            <span class="d-block text-danger" asp-validation-for="@Model.Name"></span>
+        </div>
+        <button type="submit">Add</button>
+    </form>
+</div>
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

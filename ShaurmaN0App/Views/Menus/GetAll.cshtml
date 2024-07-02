@@ -4,14 +4,15 @@
     ViewData["Title"] = "Menus";
 }
 
-<div>
-    <a class="btn btn-primary"href="/Menus/AddMenus" role="button">Add</a>
-  @foreach(var Menus in base.Model){
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-        <h5 class="card-title">@Menus.Name</h5>
-        <p class="card-text"> Price: <input type="text" value= "@Menus.Price" readonly></p>
-        </div>
+<a class="btn btn-primary" href="/Menus/AddMenus" role="button">Add</a>
+<div class="d-flex flex-wrap" style="max-width: 1400px;">
+    @foreach (var Menus in base.Model)
+    {
+        <div class="card mb-4 mr-4" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@Menus.Name</h5>
+                <p class="card-text">Price: <input type="text" value="@Menus.Price" readonly></p>
+            </div>
         </div>
     }
 </div>

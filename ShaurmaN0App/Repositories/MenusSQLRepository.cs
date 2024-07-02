@@ -40,6 +40,10 @@ namespace ShaurmaN0App.Repositories
             }
             return await context.Menus.ToArrayAsync();
         }
+        public async Task<Menus?> GetByIdAsync(Guid id)
+        {
+            return await context.Menus.FirstOrDefaultAsync(m => m.Id == id);
+        }
 
 
         public async Task UpdateAsync(Menus menus)

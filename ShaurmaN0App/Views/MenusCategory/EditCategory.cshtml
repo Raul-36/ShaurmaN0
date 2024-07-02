@@ -2,29 +2,55 @@
 @{
     ViewData["Title"] = "EditCategory";
 }
-<form id="editForm">
-    <label asp-for="@Model.Name">Name: </label>
-    <input asp-for="@Model.Name" type="text">
-    <br>
-    <button type="submit">Edit</button>
-</form>
+<div class="mx-auto" style="width: 200px;">
+    <form id="editForm">
+        <label asp-for="@Model.Name">Name: </label>
+        <input asp-for="@Model.Name" type="text">
+        <span class="d-block text-danger" asp-validation-for="@Model.Name"></span>
+        <br>
+        <button type="submit">Edit</button>
+    </form>
+</div>
 <script>
-    document.getElementById('editForm').addEventListener('submit', function (event) {
+    document.getElementById('editForm').addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const form = event.target;
-        const data = {
-            Id: "@Model.Id",
-            Name: form.Name.value
-        };
+        const form = $(this);
 
-        const response = fetch('/MenusCategory/EditCategoryApi', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        window.location.href = "/MenusCategory/GetAll";
+        if (form.valid()) {
+            const data = {
+                Id: "@Model.Id",
+                Name: form.find('[name="Name"]').val()
+            };
+
+            const response = await fetch('/MenusCategory/EditCategoryApi', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+
+            const htmlResponse = await response.text();
+            const endIndex = htmlResponse.indexOf('</title>');
+
+            const extractedText = htmlResponse.substring(0, endIndex);
+            if (extractedText.includes('AllMenusCategory - ShaurmaN0')) {
+                window.location.href = "/MenusCategory/GetAll";
+            } else {
+                document.open();
+                document.write(htmlResponse);
+                document.close();
+            }
+        }
     });
+
 </script>
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
