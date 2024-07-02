@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Models;
 
@@ -14,11 +15,11 @@ namespace ShaurmaN0App.Data
         {
             modelBuilder.Entity<Menus>(m =>
             {
-                m.HasIndex(m=>m.Name).IsUnique();
+                m.HasIndex(m => m.Name).IsUnique();
             });
             modelBuilder.Entity<MenusCategory>(mC =>
             {
-                mC.HasIndex(mC=>mC.Name).IsUnique();
+                mC.HasIndex(mC => mC.Name).IsUnique();
             });
             modelBuilder.Entity<Menus>()
             .HasOne(m => m.MenusCategory)
@@ -29,20 +30,13 @@ namespace ShaurmaN0App.Data
             modelBuilder.Entity<MenusCategory>().Property(mC => mC.Id).HasDefaultValue(Guid.NewGuid());
             modelBuilder.Entity<Menus>().Property(m => m.Id).HasDefaultValue(Guid.NewGuid());
 
-            Dictionary<string, Guid> menusCategories = new Dictionary<string, Guid>();
-            menusCategories["food"] = Guid.NewGuid();
-            menusCategories["drinkables"] = Guid.NewGuid();
+            var testMenusCategory = JsonSerializer.Deserialize<IEnumerable<MenusCategory>>(File.ReadAllText("Assets/MenusCategory.json"))?.ToArray() ?? null;
+            var testMenus = JsonSerializer.Deserialize<IEnumerable<Menus>>(File.ReadAllText("Assets/Menus.json"))?.ToArray() ?? null;
 
-            modelBuilder.Entity<MenusCategory>().HasData(
-
-                    new MenusCategory { Id = menusCategories["food"], Name = "food" },
-                    new MenusCategory { Id = menusCategories["drinkables"], Name = "drinkables" }
-            );
-            modelBuilder.Entity<Menus>().HasData(
-
-                    new Menus { Id = Guid.NewGuid(), MenusCategoryId = menusCategories["food"], Name = "Shaurma", Price = 5 },
-                    new Menus { Id = Guid.NewGuid(), MenusCategoryId = menusCategories["drinkables"], Name = "Cola", Price = 1.5 }
-            );
+            if (testMenusCategory != null)
+                modelBuilder.Entity<MenusCategory>().HasData(testMenusCategory);
+            if (testMenus != null)
+                modelBuilder.Entity<MenusCategory>().HasData(testMenus);
 
             base.OnModelCreating(modelBuilder);
         }
