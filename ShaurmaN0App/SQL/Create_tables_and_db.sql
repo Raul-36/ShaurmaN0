@@ -13,3 +13,14 @@ create table Menus
 	MenusCategoryId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES MenusCategory(Id),
 	Price float not null
 )
+
+create table Log (
+    Id  UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID() primary key,
+    Url nvarchar(max),
+    RequestBody nvarchar(max),
+    ResponseBody nvarchar(max),
+    CreationDate datetime2,
+    EndDate datetime2,
+    StatusCode int,
+    HttpMethod nvarchar(10)
+)

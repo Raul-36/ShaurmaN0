@@ -1,3 +1,4 @@
+using ShaurmaN0App.Middleware;
 using ShaurmaN0App.Repositories;
 using ShaurmaN0App.Repositories.Base;
 
@@ -18,7 +19,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseMiddleware<LoggingMiddleware>();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
