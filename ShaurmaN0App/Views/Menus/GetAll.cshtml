@@ -6,16 +6,15 @@
 
 <a class="btn btn-primary" href="/Menus/AddMenus" role="button">Add</a>
 <div class="d-flex flex-wrap" style="max-width: 1400px;">
-    @foreach (var Menus in base.Model)
+    @foreach (var menus in base.Model)
     {
-
-        var filePath = "/"+Menus.Id+".jpg";
+        var filePath = "/" + menus.Id + ".jpg";
 
         <div class="card mb-4 mr-4" style="width: 18rem;">
-            <img src="@filePath" class="card-img-top" alt="@Menus.Id">
+            <img src="@filePath" class="card-img-top" alt="@menus.Id">
             <div class="card-body">
-                <h5 class="card-title">@Menus.Name</h5>
-                <p class="card-text">Price: <input type="text" value="@Menus.Price" readonly></p>
+                <h5 class="card-title">@menus.Name</h5>
+                <p class="card-text">Price: <input type="text" value="@menus.Price" readonly></p>
             </div>
         </div>
     }

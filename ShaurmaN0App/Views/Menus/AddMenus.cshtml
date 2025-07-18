@@ -3,7 +3,7 @@
     ViewData["Title"] = "AddMenus";
 }
 <div class="mx-auto" style="width: 300px;">
-    <form asp-controller="Menus" asp-action="AddMenusApi" method="post">
+    <form asp-controller="Menus" asp-action="AddMenusApi" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label asp-for="@Model.Name">Name: </label>
             <br>
@@ -20,6 +20,14 @@
             <label asp-for="@Model.SelectedCategoryId">Category</label>
             <select asp-for="@Model.SelectedCategoryId" class="form-control" asp-items="@Model.Categories"></select>
             <span asp-validation-for="@Model.SelectedCategoryId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="menusImg" class="form-label">Img: </label>
+            <input type="file" class="form-control" id="menusImg" name="menusImg" accept=".jpg" required>
+            @if (ViewData.ModelState["menusImg"] != null)
+            {
+                <span class="text-danger">@ViewData.ModelState["menusImg"].Errors.FirstOrDefault()?.ErrorMessage</span>
+            }
         </div>
         <button type="submit">Add</button>
     </form>
