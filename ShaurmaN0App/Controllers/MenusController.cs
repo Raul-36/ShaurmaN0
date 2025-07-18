@@ -31,20 +31,24 @@ public class MenusController : Controller
 
         [ActionName("AddMenusApi")]
         [HttpPost]
-        public async Task<IActionResult> AddMenusApi([FromForm] MenusCreateDto menusCreateDto)
+        public async Task<IActionResult> AddMenusApi([FromForm] MenusCreateDto menusCreateDto, IFormFile menusImg)
         {
-                foreach (var menu in menusCreateDto.Categories)
-                {
-                        Console.WriteLine(menu.Text);
-                }
+                var newMenusId = Guid.NewGuid();
                 Menus menus = new Menus()
                 {
+                        Id = newMenusId,
                         Name = menusCreateDto.Name,
                         Price = menusCreateDto.Price,
                         MenusCategoryId = menusCreateDto.SelectedCategoryId
                 };
-                var validationResult = await menusValidator.ValidateAsync(menus);
+                if (!menusImg.ContentType.Equals("image/jpeg", StringComparison.OrdinalIgnoreCase))
+                {
+                        menusCreateDto.Categories = await this.GetSelectListItemsCategoriesAsync();
+                       base.ModelState.AddModelError("menusImg", "The extension of the submitted file must be 'jpg'");
+                       return base.View("AddMenus", menusCreateDto);
+                }
 
+                var validationResult = await menusValidator.ValidateAsync(menus);
                 if (validationResult.IsValid == false)
                 {
 
@@ -55,7 +59,12 @@ public class MenusController : Controller
                         menusCreateDto.Categories = await this.GetSelectListItemsCategoriesAsync();
                         return base.View("AddMenus", menusCreateDto);
                 }
+
                 await this.menusService.CreateAsync(menus);
+
+                using var newFileStream = System.IO.File.Create($"wwwroot/{newMenusId}.jpg");
+                await menusImg.CopyToAsync(newFileStream);
+
                 return base.Redirect("GetAll");
         }
         [ActionName("AddMenus")]
@@ -69,6 +78,36 @@ public class MenusController : Controller
                 };
 
                 return View(model);
+        }
+        [ActionName("EditMenusApi")]
+        [HttpPut]
+        public async Task<IActionResult> EditApi([FromBody] Menus menus)
+        {
+            var validationResult = await menusValidator.ValidateAsync(menus);
+
+            if (validationResult.IsValid == false)
+            {
+
+                foreach (var error in validationResult.Errors)
+                {
+                    base.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return base.View($"Edit",menus);
+            }
+            await this.menusService.UpdateAsync(menus);
+            return base.Redirect("GetAll");
+        }
+        [Route("/[controller]/Edit/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> EditAsync(Guid id)
+        {
+            return base.View(model: await menusService.GetByIdAsync(id));
+        }
+        [Route("/[controller]/DeleteApi/{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteApiAsync(Guid id){
+                await this.menusService.DeleteAsync(id);
+            return base.Redirect("GetAll");
         }
         private async Task<IEnumerable<SelectListItem>> GetSelectListItemsCategoriesAsync()
         {
