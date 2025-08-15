@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShaurmaN0App", "ShaurmaN0App\ShaurmaN0App.csproj", "{9F85F383-B3C5-4A3C-A109-AE5E2266C747}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaurmaN0AppHost", "ShaurmaN0AppHost\ShaurmaN0AppHost.csproj", "{5C14CF41-979A-4BC1-B644-BBD12DC17B13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaurmaN0ServiceDefaults", "ShaurmaN0ServiceDefaults\ShaurmaN0ServiceDefaults.csproj", "{AD16B33F-8AC1-4C39-92C5-E32C6BC72794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9F85F383-B3C5-4A3C-A109-AE5E2266C747}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F85F383-B3C5-4A3C-A109-AE5E2266C747}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F85F383-B3C5-4A3C-A109-AE5E2266C747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C14CF41-979A-4BC1-B644-BBD12DC17B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C14CF41-979A-4BC1-B644-BBD12DC17B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C14CF41-979A-4BC1-B644-BBD12DC17B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C14CF41-979A-4BC1-B644-BBD12DC17B13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD16B33F-8AC1-4C39-92C5-E32C6BC72794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD16B33F-8AC1-4C39-92C5-E32C6BC72794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD16B33F-8AC1-4C39-92C5-E32C6BC72794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD16B33F-8AC1-4C39-92C5-E32C6BC72794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

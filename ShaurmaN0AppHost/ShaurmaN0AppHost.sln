@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaurmaN0AppHost", "ShaurmaN0AppHost.csproj", "{6D99B3C3-64B4-8E0D-C6C6-A38D2AAAF7C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D99B3C3-64B4-8E0D-C6C6-A38D2AAAF7C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D99B3C3-64B4-8E0D-C6C6-A38D2AAAF7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D99B3C3-64B4-8E0D-C6C6-A38D2AAAF7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D99B3C3-64B4-8E0D-C6C6-A38D2AAAF7C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {890F96AF-1FF8-4E7B-843A-60229BC57D2A}
+	EndGlobalSection
+EndGlobal
