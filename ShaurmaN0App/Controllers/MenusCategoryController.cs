@@ -9,9 +9,11 @@ using Microsoft.Extensions.Logging;
 using ShaurmaN0App.Models;
 using ShaurmaN0App.Repositories.Base;
 using ShaurmaN0App.Services.Base;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShaurmaN0App.Controllers
 {
+    [Authorize]
     [Route("/[controller]/[action]")]
     public class MenusCategoryController : Controller
     {
@@ -30,6 +32,7 @@ namespace ShaurmaN0App.Controllers
         }
 
         [ActionName("AddCategoryApi")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddCategoryApi([FromForm] MenusCategory menusCategory)
         {
@@ -48,12 +51,14 @@ namespace ShaurmaN0App.Controllers
             return base.Redirect("GetAll");
         }
         [ActionName("AddCategory")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> AddCategoryAsync()
         {
             return base.View(model: new MenusCategory { });
         }
         [ActionName("EditCategoryApi")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> EditCategoryApi([FromBody] MenusCategory menusCategory)
         {
@@ -72,12 +77,14 @@ namespace ShaurmaN0App.Controllers
             return base.Redirect("GetAll");
         }
         [Route("/[controller]/Edit/{id}")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditCategoryAsync(Guid id)
         {
             return base.View(model: await menusCategoryService.GetByIdAsync(id));
         }
         [Route("/[controller]/DeleteApi/{id}")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteApiAsync(Guid id)
         {

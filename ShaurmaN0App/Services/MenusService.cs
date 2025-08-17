@@ -36,16 +36,10 @@ namespace ShaurmaN0App.Services.Base
 
         public async Task<bool> NameIsTaken(string name)
         {
-
-            var names = new List<string>();
-            foreach (var menus in await this.GetAllAsync())
+            var names = (await this.GetAllAsync()).Select(m => m.Name).ToList();
+            if (names.Contains(name, StringComparer.OrdinalIgnoreCase))
             {
-                names.Add(menus.Name);
-            }
-            foreach(var Name in names){
-                if(name == Name){
-                    return true;
-                }
+                return true;
             }
             return false;
         }
@@ -54,7 +48,11 @@ namespace ShaurmaN0App.Services.Base
         {
             await repository.UpdateAsync(menus);
         }
-
+        public async Task<IEnumerable<Menus>> GetAllByCategoryAsync(Guid menusCategoryId)
+        {
+            return (await this.GetAllAsync())
+            .Where(m => m.MenusCategoryId == menusCategoryId);
+        }
         
     }
 }

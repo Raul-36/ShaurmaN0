@@ -3,16 +3,56 @@
 @{
     ViewData["Title"] = "AllMenusCategory";
 }
-<a class="btn btn-primary" href="/MenusCategory/AddCategory" role="button">Add</a>
+
+@if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary" href="/MenusCategory/AddCategory" role="button">Add</a>
+}
+
 <div class="d-flex flex-wrap" style="max-width: 1400px;">
-    @foreach (var category in base.Model)
+    @foreach (var category in Model)
     {
-        <div class="card mb-4 mr-4" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">@category.Name</h5>
-                <a href="/MenusCategory/Edit/@category.Id" class="btn btn-secondary" role="button">Edit</a>
-                <button id="@category.Id" type="button" class="btn btn-danger delete-btn">Delete</button>
-            </div>
+        <div class="card mb-4 mr-4" style="width: 18rem;" id="category-card-@category.Id">
+            <a href="/Menus/GetAll/ByCategory/@category.Id" class="text-decoration-none text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">@category.Name</h5>
+                    @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                    {
+                        <a href="/MenusCategory/Edit/@category.Id" class="btn btn-secondary" role="button">Edit</a>
+                        <button type="button" class="btn btn-danger delete-btn" data-id="@category.Id">
+                            Delete
+                        </button>
+                    }
+                </div>
+            </a>
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    e.preventDefault();    
+                    e.stopPropagation();   
+
+                    const id = button.getAttribute('data-id');
+                    if (!id) {return;}
+                    const response = await fetch(`/MenusCategory/DeleteApi/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        window.location.href = "/MenusCategory/GetAll";
+                    }
+                    else {
+                        console.log('Failed to delete category');
+                    }
+                    
+                });
+            });
+        });
+    </script>
+}

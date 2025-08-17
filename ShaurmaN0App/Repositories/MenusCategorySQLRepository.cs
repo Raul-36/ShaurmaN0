@@ -1,7 +1,7 @@
 using ShaurmaN0App.Data;
 using ShaurmaN0App.Models;
-using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 namespace ShaurmaN0App.Repositories
 {
     public class MenusCategorySQLRepository : IMenusCategoryRepository
@@ -21,16 +21,13 @@ namespace ShaurmaN0App.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            Console.WriteLine(id);
-            var mC = context.MenusCategory.Find(id);
+            var mC = await context.MenusCategory.FindAsync(id);
             if (mC == null)
             {
                 throw new InvalidOperationException("Entity not found");
             }
-            Console.WriteLine(mC.Id);
             context.MenusCategory.Remove(mC);
             await context.SaveChangesAsync();
-
         }
 
         public async Task<IEnumerable<MenusCategory>> GetAllAsync()

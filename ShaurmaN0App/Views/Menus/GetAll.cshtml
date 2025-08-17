@@ -4,7 +4,10 @@
     ViewData["Title"] = "Menus";
 }
 
-<a class="btn btn-primary" href="/Menus/AddMenus" role="button">Add</a>
+@if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary" href="/Menus/AddMenus" role="button">Add</a>
+}
 <div class="d-flex flex-wrap" style="max-width: 1400px;">
     @foreach (var menus in base.Model)
     {

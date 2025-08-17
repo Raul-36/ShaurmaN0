@@ -1,0 +1,23 @@
+@model ShaurmaN0App.Dtos.RegisterDto
+
+<h2>Register</h2>
+
+<form asp-controller="Identity" asp-action="RegisterApi" method="post">
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <div asp-validation-for="Email" class="text-danger"></div>
+    </div>
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+        <div asp-validation-for="Password" class="text-danger"></div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit">Register</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

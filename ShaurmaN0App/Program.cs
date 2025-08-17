@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Reflection;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ShaurmaN0App.Data;
 using ShaurmaN0App.Repositories;
 using ShaurmaN0App.Repositories.Base;
+using ShaurmaN0App.Seeders;
 using ShaurmaN0App.Services.Base;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,14 @@ builder.Services.AddDbContext<ShaurmaDbContext>((sp, options) =>
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ShaurmaDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Login";
+    options.AccessDeniedPath = "/Identity/AccessDenied";
+});
 
 builder.Services.AddTransient<IMenusRepository, MenusSQLRepository>();
 builder.Services.AddTransient<IMenusCategoryRepository, MenusCategorySQLRepository>();
@@ -33,10 +43,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.MapDefaultEndpoints();     
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRouting();
+app.UseRouting();          
+app.UseAuthentication();   
+app.UseAuthorization();    
 
 app.MapControllerRoute(
     name: "default",
@@ -50,6 +61,10 @@ using (var scope = app.Services.CreateScope())
     {
         db.Database.Migrate();
     }
+}
+using (var scope = app.Services.CreateScope())
+{
+    await IdentitySeeder.SeedAsync(scope.ServiceProvider);
 }
 
 app.Run();

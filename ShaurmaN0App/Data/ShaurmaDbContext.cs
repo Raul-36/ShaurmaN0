@@ -1,31 +1,39 @@
-using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShaurmaN0App.Models;
+using System.Text.Json;
 
 namespace ShaurmaN0App.Data
 {
-    public class ShaurmaDbContext : DbContext
+    public class ShaurmaDbContext : IdentityDbContext<IdentityUser>
     {
         public ShaurmaDbContext(DbContextOptions<ShaurmaDbContext> options) : base(options)
         {
         }
+
         public DbSet<MenusCategory> MenusCategory { get; set; }
         public DbSet<Menus> Menus { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); 
+
             modelBuilder.Entity<Menus>(m =>
             {
                 m.HasIndex(m => m.Name).IsUnique();
             });
+
             modelBuilder.Entity<MenusCategory>(mC =>
             {
                 mC.HasIndex(mC => mC.Name).IsUnique();
             });
+
             modelBuilder.Entity<Menus>()
-            .HasOne(m => m.MenusCategory)
-            .WithMany(mc => mc.Menus)
-            .HasForeignKey(m => m.MenusCategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(m => m.MenusCategory)
+                .WithMany(mc => mc.Menus)
+                .HasForeignKey(m => m.MenusCategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<MenusCategory>().Property(mC => mC.Id).HasDefaultValue(Guid.NewGuid());
             modelBuilder.Entity<Menus>().Property(m => m.Id).HasDefaultValue(Guid.NewGuid());
@@ -36,9 +44,8 @@ namespace ShaurmaN0App.Data
             if (testMenusCategory != null)
                 modelBuilder.Entity<MenusCategory>().HasData(testMenusCategory);
             if (testMenus != null)
-                modelBuilder.Entity<MenusCategory>().HasData(testMenus);
+                modelBuilder.Entity<Menus>().HasData(testMenus); 
 
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
