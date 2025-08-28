@@ -12,12 +12,14 @@ namespace ShaurmaN0App.Data
         {
         }
 
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<MenusCategory> MenusCategory { get; set; }
         public DbSet<Menus> Menus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Menus>(m =>
             {
@@ -35,6 +37,33 @@ namespace ShaurmaN0App.Data
                 .HasForeignKey(m => m.MenusCategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Order>(o =>
+            {
+                o.HasKey(x => x.Id);
+
+                o.Property(x => x.Total)
+                    .IsRequired();
+
+                o.HasMany(x => x.OrderItems)
+                    .WithOne()
+                    .HasForeignKey(oi => oi.OrderId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<OrderItem>(oi =>
+            {
+                oi.HasKey(x => x.Id);
+
+                oi.Property(x => x.Total)
+                    .IsRequired();
+
+                oi.HasOne(x => x.Menus)
+                    .WithMany()
+                    .HasForeignKey(x => x.MenusId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+
             modelBuilder.Entity<MenusCategory>().Property(mC => mC.Id).HasDefaultValue(Guid.NewGuid());
             modelBuilder.Entity<Menus>().Property(m => m.Id).HasDefaultValue(Guid.NewGuid());
 
@@ -44,7 +73,7 @@ namespace ShaurmaN0App.Data
             if (testMenusCategory != null)
                 modelBuilder.Entity<MenusCategory>().HasData(testMenusCategory);
             if (testMenus != null)
-                modelBuilder.Entity<Menus>().HasData(testMenus); 
+                modelBuilder.Entity<Menus>().HasData(testMenus);
 
         }
     }

@@ -7,8 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ShaurmaN0App.Data;
 using ShaurmaN0App.Repositories;
 using ShaurmaN0App.Repositories.Base;
-using ShaurmaN0App.Seeders;
+using ShaurmaN0App.Services;
 using ShaurmaN0App.Services.Base;
+using ShaurmaN0App.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -32,8 +33,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddTransient<IMenusRepository, MenusSQLRepository>();
 builder.Services.AddTransient<IMenusCategoryRepository, MenusCategorySQLRepository>();
+builder.Services.AddTransient<IOrderRepository, OrderSQLRepository>();
+
 builder.Services.AddTransient<IMenusService, MenusService>();
 builder.Services.AddTransient<IMenusCategoryService, MenusCategoryService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();

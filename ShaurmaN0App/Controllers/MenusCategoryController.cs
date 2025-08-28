@@ -71,7 +71,7 @@ namespace ShaurmaN0App.Controllers
                 {
                     base.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
-                return base.View($"EditCategory",menusCategory);
+                return base.View($"EditCategory", menusCategory);
             }
             await this.menusCategoryService.UpdateAsync(menusCategory);
             return base.Redirect("GetAll");
@@ -83,15 +83,12 @@ namespace ShaurmaN0App.Controllers
         {
             return base.View(model: await menusCategoryService.GetByIdAsync(id));
         }
-        [Route("/[controller]/DeleteApi/{id}")]
+        [Route("/[controller]/Delete/{id}")]
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
-        public async Task<IActionResult> DeleteApiAsync(Guid id)
+        public async Task<IActionResult> DeleteCategoryAsync(Guid id)
         {
             await this.menusCategoryService.DeleteAsync(id);
-            return base.Redirect("GetAll");
+            return base.View();
         }
-
-
     }
 }

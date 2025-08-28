@@ -1,0 +1,52 @@
+@model IEnumerable<ShaurmaN0App.Models.Order>
+
+@{
+    ViewData["Title"] = "All Orders";
+}
+
+<h1>All Orders</h1>
+
+@if (!Model.Any())
+{
+    <p>No orders found.</p>
+}
+else
+{
+    <div class="orders-list">
+        @foreach (var order in Model.OrderByDescending(o => o.Date))
+        {
+            <div class="card mb-3 p-3 shadow-sm">
+                <h4>Order ID: @order.Id</h4>
+                <p><strong>Date:</strong> @order.Date.ToString("yyyy-MM-dd HH:mm")</p>
+                <p><strong>Total:</strong> $@order.Total</p>
+
+                @if (order.OrderItems != null && order.OrderItems.Any())
+                {
+                    <table class="table table-sm table-bordered mt-2">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Count</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <tr>
+                                    <td>@(item.Menus?.Name ?? "Unknown")</td>
+                                    <td>@item.Coutn</td>
+                                    <td>$@item.Total</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No items in this order.</p>
+                }
+            </div>
+        }
+    </div>
+}

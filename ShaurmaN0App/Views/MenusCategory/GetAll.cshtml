@@ -18,10 +18,12 @@
                     <h5 class="card-title">@category.Name</h5>
                     @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
                     {
-                        <a href="/MenusCategory/Edit/@category.Id" class="btn btn-secondary" role="button">Edit</a>
-                        <button type="button" class="btn btn-danger delete-btn" data-id="@category.Id">
+                        <a href="/MenusCategory/Edit/@category.Id" class="btn btn-secondary" role="button">
+                            Edit
+                        </a>
+                        <a href="/MenusCategory/Delete/@category.Id"class="btn btn-danger delete-btn">
                             Delete
-                        </button>
+                        </a>
                     }
                 </div>
             </a>
@@ -30,7 +32,7 @@
 </div>
 
 @section Scripts {
-    <script>
+    @* <script>
         document.addEventListener('DOMContentLoaded', () => {
             const deleteButtons = document.querySelectorAll('.delete-btn');
             deleteButtons.forEach(button => {
@@ -54,5 +56,5 @@
                 });
             });
         });
-    </script>
+    </script> *@
 }
