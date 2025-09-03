@@ -12,8 +12,8 @@ using ShaurmaN0App.Data;
 namespace ShaurmaN0App.Migrations
 {
     [DbContext(typeof(ShaurmaDbContext))]
-    [Migration("20250826145340_InitOrders")]
-    partial class InitOrders
+    [Migration("20250830115635_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,7 +228,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("36aabd50-6455-4d47-9827-b65e60e29d6f"));
+                        .HasDefaultValue(new Guid("cdf9fb64-7e63-4c4c-bcfc-26b543ac6c01"));
 
                     b.Property<Guid>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -271,7 +271,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("83ce475a-ee39-47e8-a7bd-074e224fe17d"));
+                        .HasDefaultValue(new Guid("830e2841-8f89-4132-8e6f-ab40c00554d4"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -303,8 +303,8 @@ namespace ShaurmaN0App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Date")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Total")
                         .HasColumnType("float");

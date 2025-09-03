@@ -10,6 +10,7 @@ using ShaurmaN0App.Repositories.Base;
 using ShaurmaN0App.Services;
 using ShaurmaN0App.Services.Base;
 using ShaurmaN0App.Seeders;
+using ShaurmaN0App.Convertors;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -38,6 +39,9 @@ builder.Services.AddTransient<IOrderRepository, OrderSQLRepository>();
 builder.Services.AddTransient<IMenusService, MenusService>();
 builder.Services.AddTransient<IMenusCategoryService, MenusCategoryService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+
+builder.Services.AddTransient<OrderCreateDtoConvertor>();
+
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();

@@ -36,6 +36,16 @@
                                     asp-action="GetAll">Menu category</a>
                             </li>
                         }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Orders"
+                                        asp-action="GetAll">All Orders</a>
+                                </li>
+                            }
+                        }
                     </ul>
 
                     <ul class="navbar-nav">

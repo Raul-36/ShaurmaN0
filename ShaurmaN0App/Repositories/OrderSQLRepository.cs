@@ -27,6 +27,7 @@ namespace ShaurmaN0App.Repositories
             }
             return await context.Orders
                 .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Menus)
                 .ToListAsync();
         }
 

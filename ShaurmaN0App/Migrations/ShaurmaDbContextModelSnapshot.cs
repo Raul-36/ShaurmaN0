@@ -225,7 +225,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("36aabd50-6455-4d47-9827-b65e60e29d6f"));
+                        .HasDefaultValue(new Guid("61b2ada2-c2dc-44da-a068-10e3c2386861"));
 
                     b.Property<Guid>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -268,7 +268,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("83ce475a-ee39-47e8-a7bd-074e224fe17d"));
+                        .HasDefaultValue(new Guid("012d3dea-2b66-4afb-8205-53dc6af263e8"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -300,8 +300,8 @@ namespace ShaurmaN0App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Date")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Total")
                         .HasColumnType("float");
@@ -405,7 +405,7 @@ namespace ShaurmaN0App.Migrations
                     b.HasOne("ShaurmaN0App.Models.Menus", "Menus")
                         .WithMany()
                         .HasForeignKey("MenusId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ShaurmaN0App.Models.Order", null)
                         .WithMany("OrderItems")

@@ -43,7 +43,6 @@ namespace ShaurmaN0App.Controllers
 
             var user = new IdentityUser { UserName = email, Email = email };
             var result = await _userManager.CreateAsync(user, password);
-            Console.WriteLine($"User creation result: {result.Succeeded}");
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: true);
@@ -53,7 +52,6 @@ namespace ShaurmaN0App.Controllers
 
             foreach (var error in result.Errors)
             {
-                Console.WriteLine($"Error: {error.Description}");
                 ModelState.AddModelError("", error.Description);
             }
             return View("Register", regi);

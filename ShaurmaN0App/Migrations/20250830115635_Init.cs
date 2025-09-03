@@ -3,44 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ShaurmaN0App.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentityTables : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "MenusCategory",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("976e227e-2c96-4f75-a76e-dd64f1027472"),
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldDefaultValue: new Guid("3069e09f-ca72-4726-a589-0ac917b5d4cc"));
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "MenusCategoryId",
-                table: "Menus",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "Menus",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("9c46a451-c473-49da-acfb-9adaafffa60a"),
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldDefaultValue: new Guid("97c81f96-5fe9-402d-965e-8a948702a851"));
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -78,6 +50,31 @@ namespace ShaurmaN0App.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenusCategory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValue: new Guid("830e2841-8f89-4132-8e6f-ab40c00554d4")),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenusCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,6 +183,71 @@ namespace ShaurmaN0App.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Menus",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValue: new Guid("cdf9fb64-7e63-4c4c-bcfc-26b543ac6c01")),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MenusCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Menus_MenusCategory_MenusCategoryId",
+                        column: x => x.MenusCategoryId,
+                        principalTable: "MenusCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MenusId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Total = table.Column<double>(type: "float", nullable: false),
+                    Coutn = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Menus_MenusId",
+                        column: x => x.MenusId,
+                        principalTable: "Menus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "MenusCategory",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("1c2edb52-859b-43dc-8195-1078a72fa35f"), "drinkables" },
+                    { new Guid("ba8560ae-88cb-4f03-b7df-a5574ccdbe56"), "food" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Menus",
+                columns: new[] { "Id", "MenusCategoryId", "Name", "Price" },
+                values: new object[,]
+                {
+                    { new Guid("146851d6-3158-4be1-ac7d-da077f8703cc"), new Guid("ba8560ae-88cb-4f03-b7df-a5574ccdbe56"), "Shaurma", 5.0 },
+                    { new Guid("2f18e7e0-5aec-4910-9fa6-7b385e4e2c79"), new Guid("1c2edb52-859b-43dc-8195-1078a72fa35f"), "Cola", 1.5 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -224,6 +286,33 @@ namespace ShaurmaN0App.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Menus_MenusCategoryId",
+                table: "Menus",
+                column: "MenusCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Menus_Name",
+                table: "Menus",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenusCategory_Name",
+                table: "MenusCategory",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_MenusId",
+                table: "OrderItems",
+                column: "MenusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
         }
 
         /// <inheritdoc />
@@ -245,38 +334,22 @@ namespace ShaurmaN0App.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "MenusCategory",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("3069e09f-ca72-4726-a589-0ac917b5d4cc"),
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldDefaultValue: new Guid("976e227e-2c96-4f75-a76e-dd64f1027472"));
+            migrationBuilder.DropTable(
+                name: "Menus");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "MenusCategoryId",
-                table: "Menus",
-                type: "uniqueidentifier",
-                nullable: true,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
+            migrationBuilder.DropTable(
+                name: "Orders");
 
-            migrationBuilder.AlterColumn<Guid>(
-                name: "Id",
-                table: "Menus",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("97c81f96-5fe9-402d-965e-8a948702a851"),
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldDefaultValue: new Guid("9c46a451-c473-49da-acfb-9adaafffa60a"));
+            migrationBuilder.DropTable(
+                name: "MenusCategory");
         }
     }
 }

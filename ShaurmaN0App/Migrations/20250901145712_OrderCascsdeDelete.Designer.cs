@@ -12,8 +12,8 @@ using ShaurmaN0App.Data;
 namespace ShaurmaN0App.Migrations
 {
     [DbContext(typeof(ShaurmaDbContext))]
-    [Migration("20250816095143_AddIdentityTables")]
-    partial class AddIdentityTables
+    [Migration("20250901145712_OrderCascsdeDelete")]
+    partial class OrderCascsdeDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,7 +228,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("9c46a451-c473-49da-acfb-9adaafffa60a"));
+                        .HasDefaultValue(new Guid("61b2ada2-c2dc-44da-a068-10e3c2386861"));
 
                     b.Property<Guid>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -271,7 +271,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("976e227e-2c96-4f75-a76e-dd64f1027472"));
+                        .HasDefaultValue(new Guid("012d3dea-2b66-4afb-8205-53dc6af263e8"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -295,6 +295,50 @@ namespace ShaurmaN0App.Migrations
                             Id = new Guid("ba8560ae-88cb-4f03-b7df-a5574ccdbe56"),
                             Name = "food"
                         });
+                });
+
+            modelBuilder.Entity("ShaurmaN0App.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ShaurmaN0App.Models.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Coutn")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("MenusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenusId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -359,9 +403,29 @@ namespace ShaurmaN0App.Migrations
                     b.Navigation("MenusCategory");
                 });
 
+            modelBuilder.Entity("ShaurmaN0App.Models.OrderItem", b =>
+                {
+                    b.HasOne("ShaurmaN0App.Models.Menus", "Menus")
+                        .WithMany()
+                        .HasForeignKey("MenusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ShaurmaN0App.Models.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Menus");
+                });
+
             modelBuilder.Entity("ShaurmaN0App.Models.MenusCategory", b =>
                 {
                     b.Navigation("Menus");
+                });
+
+            modelBuilder.Entity("ShaurmaN0App.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

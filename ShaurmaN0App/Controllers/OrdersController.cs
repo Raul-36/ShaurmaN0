@@ -7,12 +7,14 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ShaurmaN0App.Convertors;
+using ShaurmaN0App.Dtos;
 using ShaurmaN0App.Models;
 using ShaurmaN0App.Services.Base;
 
 namespace ShaurmaN0App.Controllers;
 
-//[Authorize]
+[Authorize]
 [Route("/[controller]/[action]")]
 public class OrdersController : Controller
 {
@@ -26,7 +28,7 @@ public class OrdersController : Controller
     }
 
     [ActionName("GetAll")]
-    //[Authorize (Roles = "Admin")]
+    [Authorize (Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> GetOrdersAsync()
     {
@@ -36,20 +38,16 @@ public class OrdersController : Controller
     
     [ActionName("AddOrderApi")]
     [HttpPost]
-    public async Task<IActionResult> AddOrderApi([FromForm] Order order)
+    public async Task<IActionResult> AddOrderApi([FromBody] OrderCreateDto dto, [FromServices]OrderCreateDtoConvertor convertor)
     {
+        var order = await convertor.ConvertToOrderAsync(dto);
         var validationResult = await orderValidator.ValidateAsync(order);
-
         if (!validationResult.IsValid)
         {
-            foreach (var error in validationResult.Errors)
-            {
-                base.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-            }
-            return base.View("AddOrder", order);
+            return base.BadRequest(validationResult.Errors);
         }
 
         await this.orderService.CreateAsync(order);
-        return base.RedirectToAction("GetAll");
+        return base.Ok(order);
     }
 }

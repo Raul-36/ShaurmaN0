@@ -10,7 +10,7 @@ namespace ShaurmaN0App.Models
     {
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Date is required")]
-        public DataType Date { get; set; }
+        public DateTime Date { get; set; }
         [Required(ErrorMessage = "Total is required")]
         [Range(1, 1_000_000)]
         public double Total { get; set; }

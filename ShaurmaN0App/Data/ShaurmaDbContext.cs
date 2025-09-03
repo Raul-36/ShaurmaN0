@@ -60,7 +60,7 @@ namespace ShaurmaN0App.Data
                 oi.HasOne(x => x.Menus)
                     .WithMany()
                     .HasForeignKey(x => x.MenusId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
 
