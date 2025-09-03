@@ -4,7 +4,7 @@ using Aspire.Hosting.ApplicationModel;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var sql = builder.AddSqlServer("sql")
+var sql = builder.AddSqlServer("sql")//.WithConnectionString("");
                  .WithLifetime(ContainerLifetime.Session);
 
 var db = sql.AddDatabase("ShaurmaN0Db");
