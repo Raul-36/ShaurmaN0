@@ -225,7 +225,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("61b2ada2-c2dc-44da-a068-10e3c2386861"));
+                        .HasDefaultValue(new Guid("b176e25a-b449-4ac8-93a7-478e34567a73"));
 
                     b.Property<Guid>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -268,7 +268,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("012d3dea-2b66-4afb-8205-53dc6af263e8"));
+                        .HasDefaultValue(new Guid("c814e449-b018-4564-b20a-b824ee02bcaa"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -317,7 +317,7 @@ namespace ShaurmaN0App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Coutn")
+                    b.Property<int>("Count")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("MenusId")

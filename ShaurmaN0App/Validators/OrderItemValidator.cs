@@ -17,7 +17,7 @@ namespace ShaurmaN0App.Validators
         {
             this.service = service;
 
-            RuleFor(i => i.Coutn)
+            RuleFor(i => i.Count)
                 .GreaterThan(0)
                 .WithMessage("Count must be greater than zero.")
                 .LessThanOrEqualTo(20)
@@ -45,7 +45,7 @@ namespace ShaurmaN0App.Validators
                 {
                     if (menu == null)
                         return false;
-                    return (total - (menu.Price * orderItem.Coutn)) == 0;
+                    return (total - (menu.Price * orderItem.Count)) == 0;
                 })
                 .WithMessage("Invalid Total.");
                 

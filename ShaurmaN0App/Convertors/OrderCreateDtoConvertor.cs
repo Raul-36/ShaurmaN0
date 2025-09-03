@@ -31,7 +31,7 @@ public class OrderCreateDtoConvertor
             var orderItem = new OrderItem
             {
                 MenusId = itemDto.MenusId,
-                Coutn = itemDto.Count,
+                Count = itemDto.Count,
                 Total = menu.Price * itemDto.Count
             };
             orderItems.Add(orderItem);

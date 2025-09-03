@@ -14,9 +14,9 @@ namespace ShaurmaN0App.Models
         [Required(ErrorMessage = "Total is required")]
         [Range(1, 1_000_000)]
         public double Total { get; set; }
-        [Required(ErrorMessage = "Coutn is required")]
+        [Required(ErrorMessage = "Count is required")]
         [Range(1, 20)]
-        public int Coutn { get; set; }
+        public int Count { get; set; }
 
         public Menus? Menus { get; set; }
     }

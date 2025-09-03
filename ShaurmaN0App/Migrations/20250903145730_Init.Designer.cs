@@ -12,7 +12,7 @@ using ShaurmaN0App.Data;
 namespace ShaurmaN0App.Migrations
 {
     [DbContext(typeof(ShaurmaDbContext))]
-    [Migration("20250830115635_Init")]
+    [Migration("20250903145730_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -228,7 +228,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("cdf9fb64-7e63-4c4c-bcfc-26b543ac6c01"));
+                        .HasDefaultValue(new Guid("b176e25a-b449-4ac8-93a7-478e34567a73"));
 
                     b.Property<Guid>("MenusCategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -271,7 +271,7 @@ namespace ShaurmaN0App.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("830e2841-8f89-4132-8e6f-ab40c00554d4"));
+                        .HasDefaultValue(new Guid("c814e449-b018-4564-b20a-b824ee02bcaa"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -320,7 +320,7 @@ namespace ShaurmaN0App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Coutn")
+                    b.Property<int>("Count")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("MenusId")
@@ -408,7 +408,7 @@ namespace ShaurmaN0App.Migrations
                     b.HasOne("ShaurmaN0App.Models.Menus", "Menus")
                         .WithMany()
                         .HasForeignKey("MenusId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ShaurmaN0App.Models.Order", null)
                         .WithMany("OrderItems")

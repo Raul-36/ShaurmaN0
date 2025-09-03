@@ -56,7 +56,7 @@ namespace ShaurmaN0App.Migrations
                 name: "MenusCategory",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValue: new Guid("830e2841-8f89-4132-8e6f-ab40c00554d4")),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValue: new Guid("c814e449-b018-4564-b20a-b824ee02bcaa")),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -187,7 +187,7 @@ namespace ShaurmaN0App.Migrations
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValue: new Guid("cdf9fb64-7e63-4c4c-bcfc-26b543ac6c01")),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValue: new Guid("b176e25a-b449-4ac8-93a7-478e34567a73")),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MenusCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false)
@@ -211,7 +211,7 @@ namespace ShaurmaN0App.Migrations
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     MenusId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: false),
-                    Coutn = table.Column<int>(type: "int", nullable: false)
+                    Count = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -221,7 +221,7 @@ namespace ShaurmaN0App.Migrations
                         column: x => x.MenusId,
                         principalTable: "Menus",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
